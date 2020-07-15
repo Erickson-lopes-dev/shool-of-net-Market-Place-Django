@@ -27,7 +27,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     # apontamento para apenas um dono / usuario logado na hora do registro
-    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Relacionando categorias ao produto / Um produto pode ter diversas categorias
     categories = models.ManyToManyField(Category, blank=True, related_name='categories')
     # quantidade do produto
@@ -47,3 +47,38 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+# pergunta
+class ProductQuestions(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    product = models . ForeignKey('Product', on_delete=models.CASCADE)
+    question = models.TextField()
+    # Status do produto
+    STATUS_CHOICES = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Inactive')
+
+    class Meta:
+        verbose_name_plural = 'Quenstions'
+
+    def __str__(self):
+        return self.question
+
+
+# Resposta
+class ProductAnswers(models.Model):
+    # usuario da pergunta
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # o id da pergunta
+    product_question = models .ForeignKey(ProductQuestions, on_delete=models.CASCADE)
+    # reposta
+    answer = models.TextField()
+
+    class Meta:
+        verbose_name_plural = 'Answers'
+
+    def __str__(self):
+        return self.answer
+
