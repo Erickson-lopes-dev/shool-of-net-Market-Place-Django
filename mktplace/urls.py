@@ -18,6 +18,7 @@ from django.urls import path, include
 from ajax_select import urls as ajax_selct_urls
 
 urlpatterns = [
+    # para o ajax ser reconhecido
     path(r'^ajax_select/', include(ajax_selct_urls)),
     path('admin/', admin.site.urls),
 ]
