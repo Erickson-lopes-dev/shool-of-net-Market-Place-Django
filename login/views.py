@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def register(request):
+    return render(request, 'registration/register.html')
+
+
+def register_sucess(request):
+    pass
