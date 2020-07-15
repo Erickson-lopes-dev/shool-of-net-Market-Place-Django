@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # adicionando aplicação
     'portal',
-    # pip install-ajax-selects
+    #
     'ajax_select'
 ]
 
