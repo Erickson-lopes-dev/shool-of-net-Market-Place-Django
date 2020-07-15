@@ -21,4 +21,5 @@ urlpatterns = [
     # para o ajax ser reconhecido
     path(r'^ajax_select/', include(ajax_selct_urls)),
     path('admin/', admin.site.urls),
+    path('', include('portal.urls'))
 ]
