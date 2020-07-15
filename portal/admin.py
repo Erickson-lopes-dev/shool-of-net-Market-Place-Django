@@ -1,8 +1,9 @@
 from django.contrib import admin
-
+from ajax_select import make_ajax_form
+from ajax_select.admin import AjaxSelectAdmin
 from portal.models import *
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(AjaxSelectAdmin):
     # populado automaticamente
     prepopulated_fields = {
         # meu campo slug quando for chamado vai ser populado baseado no name
@@ -14,7 +15,13 @@ class CategoryAdmin(admin.ModelAdmin):
     # quais itens trazer
     list_display = ('id', 'name', 'parent', 'hidden')
 
-class ProductAdmin(admin.ModelAdmin):
+    # toda vez que aparecer "parent" era buscar o lookup com nome de categories
+    form = make_ajax_form(Category,
+                          {'parent': 'categories'
+                           })
+
+# class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(AjaxSelectAdmin):
     # populado automaticamente
     prepopulated_fields = {
         # meu campo slug quando for chamado vai ser populado baseado no name
@@ -26,8 +33,14 @@ class ProductAdmin(admin.ModelAdmin):
     # quais itens trazer
     list_display = ('id', 'name', 'short_description', 'status')
 
-# juntar tbm as perguntas referentes as respostas
+    # toda vez que aparecer "parent" era buscar o lookup com nome de categories
+    form = make_ajax_form(Product,
+                          {'user': 'user',
+                           'categories':'categories'
+                           })
+
 class ProductAnserInline(admin.StackedInline):
+    # juntar tbm as perguntas referentes as respostas
     model = ProductAnswers
     # se pode deletar
     can_delete = False
@@ -37,7 +50,6 @@ class ProductQuestionsAdmin(admin.ModelAdmin):
 
     # toda vez que tiver uma pergunta as respostas tem que aparecer de forma organizada
     inlines = (ProductAnserInline, )
-
 
 
 # registra o model e usa as configurações da classe indicada

@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from ajax_select import urls as ajax_selct_urls
 
 urlpatterns = [
+    path(r'^ajax_select/', include(ajax_selct_urls)),
     path('admin/', admin.site.urls),
 ]

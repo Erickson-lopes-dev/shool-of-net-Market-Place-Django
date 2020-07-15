@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # adicionando aplicação
-    'portal'
+    'portal',
+    # pip install-ajax-selects
+    'ajax_select'
 ]
 
 MIDDLEWARE = [
